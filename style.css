@@ -735,7 +735,8 @@ for p in sorted(base.iterdir()):
 print(f"\nZIP: {zip_path}")
 
   }
-/* QUANTITY - ONE LINE */
+
+  /* QUANTITY - ONE LINE */
 
 .quantity-box{
   display:flex;
@@ -797,8 +798,4 @@ print(f"\nZIP: {zip_path}")
 .quantity-control button:hover{
   background:var(--cream);
 }
-
-
-
-
-
+                                
