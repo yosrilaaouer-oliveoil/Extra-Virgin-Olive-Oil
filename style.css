@@ -734,6 +734,17 @@ for p in sorted(base.iterdir()):
     print(f"- {p.name} ({p.stat().st_size:,} bytes)")
 print(f"\nZIP: {zip_path}")
 
+  }
+
+/* QUANTITY CONTROL */
+
+.quantity-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ...rest of quantity code... */
 
 
 
