@@ -404,30 +404,37 @@ document.querySelectorAll('.reveal').forEach(el => {
 document.querySelector('#year').textContent =
   new Date().getFullYear();
 
+// QUANTITY BUTTONS - MINIMUM 1, MAXIMUM 10
 
-// QUANTITY BUTTONS: MINIMUM 1, MAXIMUM 10
+document.querySelectorAll('.qty-plus').forEach(function(button) {
+  button.addEventListener('click', function() {
 
-document.querySelectorAll('.qty-plus').forEach(button => {
-  button.addEventListener('click', () => {
-    const target = document.getElementById(button.dataset.target);
+    const targetId = button.getAttribute('data-target');
+    const target = document.getElementById(targetId);
+
     let quantity = Number(target.textContent);
 
     if (quantity < 10) {
-      quantity++;
+      quantity = quantity + 1;
       target.textContent = quantity;
     }
+
   });
 });
 
-document.querySelectorAll('.qty-minus').forEach(button => {
-  button.addEventListener('click', () => {
-    const target = document.getElementById(button.dataset.target);
+document.querySelectorAll('.qty-minus').forEach(function(button) {
+  button.addEventListener('click', function() {
+
+    const targetId = button.getAttribute('data-target');
+    const target = document.getElementById(targetId);
+
     let quantity = Number(target.textContent);
 
     if (quantity > 1) {
-      quantity--;
+      quantity = quantity - 1;
       target.textContent = quantity;
     }
+
   });
 });
 
