@@ -285,32 +285,49 @@ function renderCart(){
   });
 }
 
-document.querySelector('.add-to-cart').addEventListener('click', e => {
-  const name =
-    currentLang === 'fi'
-      ? 'Ekstra-neitsytoliiviöljy 1 L'
-      : 'Extra Virgin Olive Oil 1L';
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', e => {
 
-  const price = Number(e.currentTarget.dataset.price);
+    const productName = e.currentTarget.dataset.product;
+    const price = Number(e.currentTarget.dataset.price);
 
-  const existing = cart.find(item => item.name === name);
+    const quantitySelectId = e.currentTarget.dataset.quantity;
+    const quantitySelect = document.getElementById(quantitySelectId);
 
-  if(existing){
-    existing.qty += 1;
-  } else {
-    cart.push({
-      name: name,
-      price: price,
-      qty: 1
-    });
-  }
+    const quantity = quantitySelect
+      ? Number(quantitySelect.value)
+      : 1;
 
-  renderCart();
+    const name =
+      currentLang === 'fi'
+        ? productName
+            .replace('Extra Virgin Olive Oil', 'Ekstra-neitsytoliiviöljy')
+            .replace('1L', '1 L')
+            .replace('750ml', '750 ml')
+        : productName;
 
-  showToast(`${name} ${t('added')}`);
+    const existing = cart.find(item => item.name === name);
 
-  openCart();
+    if(existing){
+      existing.qty += quantity;
+    } else {
+      cart.push({
+        name: name,
+        price: price,
+        qty: quantity
+      });
+    }
+
+    renderCart();
+
+    showToast(
+      `${quantity} × ${name} ${t('added')}`
+    );
+
+    openCart();
+  });
 });
+
 
 document.querySelector('.checkout').addEventListener('click', () => {
   if(!cart.length){
