@@ -18,18 +18,20 @@ const translations = {
     note2:'1 Litre',
     note3:'Origin: Tunisia',
 
-    marquee:'Family heritage • Tunisia • Extra virgin • 1 litre • €20 • Mediterranean tradition',
+    marquee:'Family heritage • Tunisia • Extra virgin • Mediterranean tradition',
 
     productEyebrow:'Our olive oil',
     productTitle:'Extra Virgin Olive Oil',
     productOrigin:'Chraaf, Chorbane, Tunisia',
-    productDescription:'A 1 litre bottle of Tunisian extra virgin olive oil from our family olive-growing tradition. Ideal for salads, bread, cooking and everyday Mediterranean meals.',
+    productDescription:'Tunisian extra virgin olive oil from our family olive-growing tradition. Ideal for salads, bread, cooking and everyday Mediterranean meals.',
+
     sizeLabel:'Size',
     originLabel:'Origin',
     originValue:'Tunisia',
     typeLabel:'Type',
     typeValue:'Extra Virgin',
     priceLabel:'Price',
+    quantityLabel:'Quantity',
     addToCart:'Add to cart',
 
     originEyebrow:'Our family heritage',
@@ -46,7 +48,7 @@ const translations = {
 
     qualityEyebrow:'Simple and authentic',
     qualityTitle:'Made for the Mediterranean table.',
-    qualityIntro:'We are starting with one clear product: Tunisian extra virgin olive oil in a practical 1 litre format.',
+    qualityIntro:'Tunisian extra virgin olive oil from our family groves.',
 
     feature1Title:'Extra virgin',
     feature1Text:'Our store is focused on extra virgin olive oil.',
@@ -96,18 +98,20 @@ const translations = {
     note2:'1 litra',
     note3:'Alkuperä: Tunisia',
 
-    marquee:'Perheperintö • Tunisia • Ekstra-neitsyt • 1 litra • 20 € • Välimeren perinne',
+    marquee:'Perheperintö • Tunisia • Ekstra-neitsyt • Välimeren perinne',
 
     productEyebrow:'Oliiviöljymme',
     productTitle:'Ekstra-neitsytoliiviöljy',
     productOrigin:'Chraaf, Chorbane, Tunisia',
-    productDescription:'1 litran pullo tunisialaista ekstra-neitsytoliiviöljyä perheemme oliivinviljelyperinteestä. Sopii salaatteihin, leivälle, ruoanlaittoon ja jokapäiväisiin Välimeren ruokiin.',
+    productDescription:'Tunisialaista ekstra-neitsytoliiviöljyä perheemme oliivinviljelyperinteestä. Sopii salaatteihin, leivälle, ruoanlaittoon ja jokapäiväisiin Välimeren ruokiin.',
+
     sizeLabel:'Koko',
     originLabel:'Alkuperä',
     originValue:'Tunisia',
     typeLabel:'Tyyppi',
     typeValue:'Ekstra-neitsyt',
     priceLabel:'Hinta',
+    quantityLabel:'Määrä',
     addToCart:'Lisää ostoskoriin',
 
     originEyebrow:'Perheemme perintö',
@@ -124,7 +128,7 @@ const translations = {
 
     qualityEyebrow:'Yksinkertainen ja aito',
     qualityTitle:'Tehty Välimeren pöytään.',
-    qualityIntro:'Aloitamme yhdellä selkeällä tuotteella: tunisialaisella ekstra-neitsytoliiviöljyllä käytännöllisessä 1 litran koossa.',
+    qualityIntro:'Tunisialaista ekstra-neitsytoliiviöljyä perheemme oliivilehdoista.',
 
     feature1Title:'Ekstra-neitsyt',
     feature1Text:'Kauppamme keskittyy ekstra-neitsytoliiviöljyyn.',
@@ -158,6 +162,11 @@ const translations = {
   }
 };
 
+
+// ========================================
+// STORE
+// ========================================
+
 let currentLang = localStorage.getItem('mooLanguage') || 'en';
 let cart = JSON.parse(localStorage.getItem('mooCart') || '[]');
 
@@ -172,38 +181,61 @@ const cartCountEl = document.querySelector('.cart-count');
 const cartTotalEl = document.querySelector('.cart-total');
 const toast = document.querySelector('.toast');
 
-function t(key){
+
+// ========================================
+// TRANSLATION
+// ========================================
+
+function t(key) {
   return translations[currentLang][key] || translations.en[key] || key;
 }
 
-function setLanguage(lang){
+function setLanguage(lang) {
   currentLang = lang;
+
   localStorage.setItem('mooLanguage', lang);
+
   document.documentElement.lang = lang;
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const value = t(el.dataset.i18n);
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const value = t(element.dataset.i18n);
 
-    if(value){
-      el.textContent = value;
+    if (value) {
+      element.textContent = value;
     }
   });
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
+  document.querySelectorAll('.lang-btn').forEach(button => {
+    button.classList.toggle(
+      'active',
+      button.dataset.lang === lang
+    );
   });
 
   renderCart();
 }
 
-document.querySelectorAll('.lang-btn').forEach(btn => {
-  btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+document.querySelectorAll('.lang-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    setLanguage(button.dataset.lang);
+  });
 });
 
-menuToggle.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', open);
-});
+
+// ========================================
+// MOBILE MENU
+// ========================================
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+
+    menuToggle.setAttribute(
+      'aria-expanded',
+      open
+    );
+  });
+}
 
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
@@ -211,7 +243,14 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-function showToast(message){
+
+// ========================================
+// MESSAGE
+// ========================================
+
+function showToast(message) {
+  if (!toast) return;
+
   toast.textContent = message;
   toast.classList.add('show');
 
@@ -222,101 +261,240 @@ function showToast(message){
   }, 1800);
 }
 
-function openCart(){
+
+// ========================================
+// CART OPEN / CLOSE
+// ========================================
+
+function openCart() {
+  if (!cartDrawer || !overlay) return;
+
   cartDrawer.classList.add('open');
-  cartDrawer.setAttribute('aria-hidden','false');
+  cartDrawer.setAttribute('aria-hidden', 'false');
+
   overlay.hidden = false;
+
   document.body.style.overflow = 'hidden';
 }
 
-function closeCart(){
+function closeCart() {
+  if (!cartDrawer || !overlay) return;
+
   cartDrawer.classList.remove('open');
-  cartDrawer.setAttribute('aria-hidden','true');
+  cartDrawer.setAttribute('aria-hidden', 'true');
+
   overlay.hidden = true;
+
   document.body.style.overflow = '';
 }
 
-cartButton.addEventListener('click', openCart);
-cartClose.addEventListener('click', closeCart);
-overlay.addEventListener('click', closeCart);
+if (cartButton) {
+  cartButton.addEventListener('click', openCart);
+}
 
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){
+if (cartClose) {
+  cartClose.addEventListener('click', closeCart);
+}
+
+if (overlay) {
+  overlay.addEventListener('click', closeCart);
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
     closeCart();
   }
 });
 
-function renderCart(){
-  cartCountEl.textContent = cart.reduce((sum, item) => {
-    return sum + item.qty;
-  }, 0);
 
-  cartTotalEl.textContent =
-    `€${cart.reduce((sum, item) => {
-      return sum + (item.price * item.qty);
-    }, 0).toFixed(2)}`;
+// ========================================
+// CART
+// ========================================
 
-  localStorage.setItem('mooCart', JSON.stringify(cart));
+function renderCart() {
 
-  if(!cart.length){
-    cartItemsEl.innerHTML =
-      `<p class="cart-empty">${t('emptyCart')}</p>`;
+  if (!cartCountEl || !cartTotalEl || !cartItemsEl) {
     return;
   }
 
-  cartItemsEl.innerHTML = cart.map((item, index) => `
-    <div class="cart-item">
-      <div>
-        <strong>${item.name}</strong>
-        <p>${item.qty} × €${item.price.toFixed(2)}</p>
-      </div>
+  cartCountEl.textContent =
+    cart.reduce((sum, item) => {
+      return sum + item.qty;
+    }, 0);
 
-      <button type="button" data-remove="${index}">
-        ${t('remove')}
-      </button>
-    </div>
-  `).join('');
+  const total =
+    cart.reduce((sum, item) => {
+      return sum + (item.price * item.qty);
+    }, 0);
+
+  cartTotalEl.textContent =
+    `€${total.toFixed(2)}`;
+
+  localStorage.setItem(
+    'mooCart',
+    JSON.stringify(cart)
+  );
+
+  if (!cart.length) {
+    cartItemsEl.innerHTML =
+      `<p class="cart-empty">${t('emptyCart')}</p>`;
+
+    return;
+  }
+
+  cartItemsEl.innerHTML =
+    cart.map((item, index) => `
+      <div class="cart-item">
+
+        <div>
+          <strong>${item.name}</strong>
+
+          <p>
+            ${item.qty} × €${item.price.toFixed(2)}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          data-remove="${index}">
+          ${t('remove')}
+        </button>
+
+      </div>
+    `).join('');
 
   document.querySelectorAll('[data-remove]').forEach(button => {
+
     button.addEventListener('click', () => {
-      cart.splice(Number(button.dataset.remove), 1);
+
+      cart.splice(
+        Number(button.dataset.remove),
+        1
+      );
+
       renderCart();
     });
+
   });
 }
 
+
+// ========================================
+// QUANTITY − 1 +
+// MINIMUM 1 / MAXIMUM 10
+// ========================================
+
+document.querySelectorAll('.qty-plus').forEach(button => {
+
+  button.addEventListener('click', () => {
+
+    const targetId =
+      button.getAttribute('data-target');
+
+    const target =
+      document.getElementById(targetId);
+
+    if (!target) return;
+
+    let quantity =
+      Number(target.textContent);
+
+    if (quantity < 10) {
+      quantity += 1;
+      target.textContent = quantity;
+    }
+
+  });
+
+});
+
+
+document.querySelectorAll('.qty-minus').forEach(button => {
+
+  button.addEventListener('click', () => {
+
+    const targetId =
+      button.getAttribute('data-target');
+
+    const target =
+      document.getElementById(targetId);
+
+    if (!target) return;
+
+    let quantity =
+      Number(target.textContent);
+
+    if (quantity > 1) {
+      quantity -= 1;
+      target.textContent = quantity;
+    }
+
+  });
+
+});
+
+
+// ========================================
+// ADD PRODUCTS TO CART
+// ========================================
+
 document.querySelectorAll('.add-to-cart').forEach(button => {
-  button.addEventListener('click', e => {
 
-    const productName = e.currentTarget.dataset.product;
-    const price = Number(e.currentTarget.dataset.price);
+  button.addEventListener('click', event => {
 
-    const quantitySelectId = e.currentTarget.dataset.quantity;
-    const quantitySelect = document.getElementById(quantitySelectId);
+    const productName =
+      event.currentTarget.dataset.product;
 
-    const quantity = quantitySelect
-      ? Number(quantitySelect.value)
-      : 1;
+    const price =
+      Number(event.currentTarget.dataset.price);
 
-    const name =
-      currentLang === 'fi'
-        ? productName
-            .replace('Extra Virgin Olive Oil', 'Ekstra-neitsytoliiviöljy')
-            .replace('1L', '1 L')
-            .replace('750ml', '750 ml')
-        : productName;
+    const quantityId =
+      event.currentTarget.dataset.quantity;
 
-    const existing = cart.find(item => item.name === name);
+    const quantityElement =
+      document.getElementById(quantityId);
 
-    if(existing){
+    const quantity =
+      quantityElement
+        ? Number(quantityElement.textContent)
+        : 1;
+
+
+    let name = productName;
+
+    if (currentLang === 'fi') {
+
+      name = productName
+        .replace(
+          'Extra Virgin Olive Oil',
+          'Ekstra-neitsytoliiviöljy'
+        )
+        .replace('1L', '1 L')
+        .replace('750ml', '750 ml');
+
+    }
+
+
+    const existing =
+      cart.find(item => {
+        return item.name === name;
+      });
+
+
+    if (existing) {
+
       existing.qty += quantity;
+
     } else {
+
       cart.push({
         name: name,
         price: price,
         qty: quantity
       });
+
     }
+
 
     renderCart();
 
@@ -325,117 +503,167 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     );
 
     openCart();
+
   });
+
 });
 
 
-document.querySelector('.checkout').addEventListener('click', () => {
-  if(!cart.length){
-    return showToast(t('emptyCart'));
-  }
+// ========================================
+// ORDER BY EMAIL
+// ========================================
 
-  const lines = cart
-    .map(item =>
-      `- ${item.name} × ${item.qty} — €${(item.price * item.qty).toFixed(2)}`
-    )
-    .join('\n');
+const checkoutButton =
+  document.querySelector('.checkout');
 
-  const total = cart
-    .reduce((sum, item) => {
-      return sum + (item.price * item.qty);
-    }, 0)
-    .toFixed(2);
+if (checkoutButton) {
 
-  const subject =
-    currentLang === 'fi'
-      ? 'Mediterranean Olive Oil - tilaustiedustelu'
-      : 'Mediterranean Olive Oil - order request';
+  checkoutButton.addEventListener('click', () => {
 
-  const intro =
-    currentLang === 'fi'
-      ? 'Hei Mediterranean Olive Oil,\n\nHaluaisin tilata:'
-      : 'Hello Mediterranean Olive Oil,\n\nI would like to order:';
-
-  const ending =
-    currentLang === 'fi'
-      ? '\n\nVoitteko lähettää maksu- ja toimitustiedot?'
-      : '\n\nPlease send me payment and delivery details.';
-
-  window.location.href =
-    `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-      `${intro}\n${lines}\n\n${t('total')}: €${total}${ending}`
-    )}`;
-});
-
-document.querySelector('#contactForm').addEventListener('submit', event => {
-  event.preventDefault();
-
-  const data = new FormData(event.currentTarget);
-
-  const subject =
-    encodeURIComponent(
-      `Mediterranean Olive Oil - ${data.get('name')}`
-    );
-
-  const body =
-    encodeURIComponent(
-      `${data.get('message')}\n\n${t('emailLabel')}: ${data.get('email')}`
-    );
-
-  window.location.href =
-    `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-});
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.12
-});
-
-document.querySelectorAll('.reveal').forEach(el => {
-  observer.observe(el);
-});
-
-document.querySelector('#year').textContent =
-  new Date().getFullYear();
-
-// QUANTITY BUTTONS - MINIMUM 1, MAXIMUM 10
-
-document.querySelectorAll('.qty-plus').forEach(function(button) {
-  button.addEventListener('click', function() {
-
-    const targetId = button.getAttribute('data-target');
-    const target = document.getElementById(targetId);
-
-    let quantity = Number(target.textContent);
-
-    if (quantity < 10) {
-      quantity = quantity + 1;
-      target.textContent = quantity;
+    if (!cart.length) {
+      return showToast(t('emptyCart'));
     }
 
+
+    const lines =
+      cart.map(item => {
+
+        const itemTotal =
+          item.price * item.qty;
+
+        return (
+          `- ${item.name} × ${item.qty}` +
+          ` — €${itemTotal.toFixed(2)}`
+        );
+
+      }).join('\n');
+
+
+    const total =
+      cart.reduce((sum, item) => {
+        return sum + (item.price * item.qty);
+      }, 0).toFixed(2);
+
+
+    const subject =
+      currentLang === 'fi'
+        ? 'Mediterranean Olive Oil - tilaustiedustelu'
+        : 'Mediterranean Olive Oil - order request';
+
+
+    const intro =
+      currentLang === 'fi'
+        ? 'Hei Mediterranean Olive Oil,\n\nHaluaisin tilata:'
+        : 'Hello Mediterranean Olive Oil,\n\nI would like to order:';
+
+
+    const ending =
+      currentLang === 'fi'
+        ? '\n\nVoitteko lähettää maksu- ja toimitustiedot?'
+        : '\n\nPlease send me payment and delivery details.';
+
+
+    const body =
+      `${intro}\n${lines}\n\n` +
+      `${t('total')}: €${total}${ending}`;
+
+
+    window.location.href =
+      `mailto:${EMAIL}` +
+      `?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+
   });
+
+}
+
+
+// ========================================
+// CONTACT FORM
+// ========================================
+
+const contactForm =
+  document.querySelector('#contactForm');
+
+if (contactForm) {
+
+  contactForm.addEventListener('submit', event => {
+
+    event.preventDefault();
+
+    const data =
+      new FormData(event.currentTarget);
+
+
+    const subject =
+      encodeURIComponent(
+        `Mediterranean Olive Oil - ${data.get('name')}`
+      );
+
+
+    const body =
+      encodeURIComponent(
+        `${data.get('message')}\n\n` +
+        `${t('emailLabel')}: ${data.get('email')}`
+      );
+
+
+    window.location.href =
+      `mailto:${EMAIL}` +
+      `?subject=${subject}` +
+      `&body=${body}`;
+
+  });
+
+}
+
+
+// ========================================
+// SCROLL ANIMATION
+// ========================================
+
+const observer =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add('visible');
+
+        observer.unobserve(
+          entry.target
+        );
+
+      }
+
+    });
+
+  }, {
+    threshold: 0.12
+  });
+
+
+document.querySelectorAll('.reveal').forEach(element => {
+  observer.observe(element);
 });
 
-document.querySelectorAll('.qty-minus').forEach(function(button) {
-  button.addEventListener('click', function() {
 
-    const targetId = button.getAttribute('data-target');
-    const target = document.getElementById(targetId);
+// ========================================
+// YEAR
+// ========================================
 
-    let quantity = Number(target.textContent);
+const yearElement =
+  document.querySelector('#year');
 
-    if (quantity > 1) {
-      quantity = quantity - 1;
-      target.textContent = quantity;
-    }
+if (yearElement) {
+  yearElement.textContent =
+    new Date().getFullYear();
+}
 
-  });
-});
+
+// ========================================
+// START WEBSITE
+// ========================================
 
 setLanguage(currentLang);
