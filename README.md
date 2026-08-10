@@ -1,27 +1,57 @@
-# Mediterranean Olive Oil
+Mediterranean Olive Oil
 
-Bilingual English/Finnish storefront for Mediterranean Olive Oil.
+Official website for Mediterranean Olive Oil.
 
-## Current product
-- Extra Virgin Olive Oil
-- 1000 ml / 1 litre
-- €20
-- Origin: Chraaf, Chorbane, Tunisia
+Product
 
-## Contact
-ms.olive.oil@outlook.com
+Extra Virgin Olive Oil — 1 litre
 
-## Files
-- `index.html` — page structure
-- `style.css` — responsive design
-- `script.js` — language switcher, cart and email ordering
-- `logo.png` — brand logo
+Price: €20
 
-## GitHub Pages
-Upload these files to the root of the GitHub repository and enable GitHub Pages from the `main` branch in Settings → Pages.
+Origin: Chraaf, Chorbane, Tunisia
 
-## Next development steps
-1. Add real product photography.
-2. Add delivery rules for Finland/EU.
-3. Add legal/company information once available.
-4. Add a real checkout/payment provider after the business setup is ready.
+Type: Extra Virgin Olive Oil
+
+Store languages: English and Finnish
+
+Family heritage
+
+Our family's olive-growing tradition spans four generations.
+
+Our great-grandfather planted the first olive trees.
+
+Our grandfather continued the tradition and planted more than 100 additional trees.
+
+In 2015, our father planted more than 70 new olive trees.
+
+In 2024, the next generation planted about 52 more olive trees.
+
+Today, the family olive groves cover approximately 14 hectares.
+
+The olive groves are part of our family's heritage and connection to the land in Tunisia.
+
+Contact
+
+Mediterranean Olive Oil
+
+Email: ms.olive.oil@outlook.com
+
+Website files
+
+index.html — website content
+
+style.css — website design and responsive layout
+
+script.js — English/Finnish language switch, cart and email ordering
+
+logo.png — store logo
+
+olive-oil-bottle.png.png — product bottle image
+
+GitHub Pages
+
+This is a static HTML/CSS/JavaScript website and can be published directly with GitHub Pages.
+
+Finnish company/business information can be added later.
+
+© 2026 Mediterranean Olive Oil. All rights reserved.
