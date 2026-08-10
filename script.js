@@ -15,11 +15,19 @@ const translations = {
     heroEyebrow:'Tunisian sydämestä', heroTitle:'Välimeren puhdas luonne jokaisessa pisarassa.', heroText:'Ekstra-neitsytoliiviöljyä Chraafista, Chorbanesta, Tunisiasta — alueelta, jota muovaavat aurinko, oliivipuut ja Välimeren perinteet.', shopNow:'Osta nyt', discoverOrigin:'Tutustu alkuperään →', note1:'Ekstra-neitsyt', note2:'1 litra', note3:'Alkuperä: Tunisia',
     marquee:'Tunisialainen alkuperä • Välimeren perinne • Ekstra-neitsyt • 1 litra • 20 € • Tunisialainen alkuperä • Välimeren perinne',
     productEyebrow:'Ensimmäinen tuotteemme', productTitle:'Ekstra-neitsytoliiviöljy', productOrigin:'Chraaf, Chorbane, Tunisia', productDescription:'Runsas 1 litran pullo tunisialaista ekstra-neitsytoliiviöljyä salaatteihin, leivälle, ruoanlaittoon ja jokapäiväisiin Välimeren ruokiin.', sizeLabel:'Koko', originLabel:'Alkuperä', originValue:'Tunisia', typeLabel:'Tyyppi', typeValue:'Ekstra-neitsyt', priceLabel:'Hinta', addToCart:'Lisää ostoskoriin',
-    originEyebrow:'Alkuperämme', originTitle:'Chraafista, Chorbanesta sinun pöytääsi.', originText1:'Oliiviöljymme tarina alkaa Chraafista, Chorbanen alueelta Tunisiasta. Oliivipuut kasvavat voimakkaan Välimeren auringon alla maisemassa, jolla on vahva yhteys Tunisian maatalousperinteeseen.', originText2:'Brändimme yhdistää kolme Tunisiaa kuvaavaa elementtiä: oliivilehdot, Välimeren ja El Jemin historiallisen perinnön.', cardTreesTitle:'Oliivipuut', cardTreesText:'Tuotteemme perusta ja yhteytemme maahan.', cardSeaTitle:'Välimeri', cardSeaText:'Tunisian ilmaston, kulttuurin ja välimerellisen identiteetin symboli.', cardJemTitle:'El Jemin perintö', cardJemText:'Visuaalinen yhteys Tunisian pitkään historiaan ja ainutlaatuiseen luonteeseen.',
-    qualityEyebrow:'Yksinkertainen ja aito', qualityTitle:'Tehty Välimeren pöytään.', qualityIntro:'Aloitamme yhdellä selkeällä tuotteella: tunisialaisella ekstra-neitsytoliiviöljyllä käytännöllisessä 1 litran koossa.', feature1Title:'Ekstra-neitsyt', feature1Text:'Kauppamme keskittyy ekstra-neitsytoliiviöljyyn.', feature2Title:'Tunisialainen alkuperä', feature2Text:'Tuotteen identiteetti perustuu Chraafiin, Chorbaneen, Tunisiaan.', feature3Title:'Arkeen sopiva koko', feature3Text:'Yksi litra ruoanlaittoon, salaatteihin, dippaukseen ja perheaterioille.', feature4Title:'Suora yhteys', feature4Text:'Asiakkaat voivat lähettää tilaustoiveen suoraan sähköpostilla.',
-    contactEyebrow:'Ota yhteyttä', contactTitle:'Kysymyksiä tai tilaustiedusteluja?', contactText:'Ota yhteyttä Mediterranean Olive Oiliin. Vastaamme saatavuudesta, toimituksesta ja tilauksesta.', nameLabel:'Nimi', emailLabel:'Sähköposti', messageLabel:'Viesti', prepareEmail:'Valmistele sähköposti', formNote:'Tämä avaa sähköpostisovelluksesi. Sivusto ei tallenna viestiäsi.', footerText:'Ekstra-neitsytoliiviöljyä Chraafista, Chorbanesta, Tunisiasta.', footerExplore:'Tutustu', rights:'Kaikki oikeudet pidätetään.', yourCart:'Ostoskori', total:'Yhteensä', orderByEmail:'Tilaa sähköpostilla', checkoutNote:'Maksu- ja toimitustiedot vahvistetaan toistaiseksi sähköpostitse.', emptyCart:'Ostoskorisi on tyhjä.', remove:'Poista', added:'lisätty ostoskoriin'
-  }
-};
+   originTitle:'Neljä sukupolvea oliiviperinnettä.',
+
+originEyebrow:'Alkuperämme',
+originTitle:'Neljä sukupolvea oliiviperinnettä.',
+originText1:'Perheemme oliivitarina alkoi isoisoisästämme, joka istutti ensimmäiset oliivipuut. Isoisämme jatkoi perinnettä istuttamalla yli 100 uutta oliivipuuta. Vuonna 2015 isämme istutti yli 70 uutta puuta, ja vuonna 2024 seuraava sukupolvi jatkoi työtä istuttamalla noin 52 uutta oliivipuuta.',
+originText2:'Nykyään perheemme oliivilehdot kattavat noin 14 hehtaaria Chraafin ja Chorbanen alueella Tunisiassa. Nämä puut ovat meille enemmän kuin oliiviöljyn lähde — ne ovat perheemme perintöä, sukupolvien työtä ja yhteyttä maahan.',
+cardTreesTitle:'Oliivipuut',
+cardTreesText:'Perheemme oliiviperinnön ja sukupolvien työn perusta.',
+cardSeaTitle:'Välimeri',
+cardSeaText:'Tunisian ilmaston, kulttuurin ja välimerellisen identiteetin symboli.',
+cardJemTitle:'El Jemin perintö',
+cardJemText:'Yhteys Tunisian pitkään historiaan ja ainutlaatuiseen kulttuuriperintöön.',
+    
 
 let currentLang = localStorage.getItem('mooLanguage') || 'en';
 let cart = JSON.parse(localStorage.getItem('mooCart') || '[]');
