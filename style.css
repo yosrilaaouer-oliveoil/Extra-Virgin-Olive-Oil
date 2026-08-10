@@ -735,17 +735,68 @@ for p in sorted(base.iterdir()):
 print(f"\nZIP: {zip_path}")
 
   }
+/* QUANTITY - ONE LINE */
 
-/* QUANTITY CONTROL */
-
-.quantity-box {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.quantity-box{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:18px;
 }
 
-/* ...rest of quantity code... */
+.quantity-box > span{
+  font-size:0.85rem;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  white-space:nowrap;
+}
 
+.quantity-control{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  width:180px;
+  height:54px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:white;
+  overflow:hidden;
+}
+
+.quantity-control button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:55px;
+  height:54px;
+  padding:0;
+  border:0;
+  background:white;
+  font-size:1.6rem;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.quantity-number{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:70px;
+  height:54px;
+  font-size:1.7rem;
+  line-height:1;
+  font-weight:800;
+  text-align:center;
+  border-left:1px solid var(--line);
+  border-right:1px solid var(--line);
+}
+
+.quantity-control button:hover{
+  background:var(--cream);
+}
 
 
 
