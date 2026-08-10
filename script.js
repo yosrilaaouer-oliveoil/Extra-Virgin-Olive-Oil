@@ -404,4 +404,31 @@ document.querySelectorAll('.reveal').forEach(el => {
 document.querySelector('#year').textContent =
   new Date().getFullYear();
 
+
+// QUANTITY BUTTONS: MINIMUM 1, MAXIMUM 10
+
+document.querySelectorAll('.qty-plus').forEach(button => {
+  button.addEventListener('click', () => {
+    const target = document.getElementById(button.dataset.target);
+    let quantity = Number(target.textContent);
+
+    if (quantity < 10) {
+      quantity++;
+      target.textContent = quantity;
+    }
+  });
+});
+
+document.querySelectorAll('.qty-minus').forEach(button => {
+  button.addEventListener('click', () => {
+    const target = document.getElementById(button.dataset.target);
+    let quantity = Number(target.textContent);
+
+    if (quantity > 1) {
+      quantity--;
+      target.textContent = quantity;
+    }
+  });
+});
+
 setLanguage(currentLang);
